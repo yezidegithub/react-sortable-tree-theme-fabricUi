@@ -1,6 +1,6 @@
 {
   "name": "react-sortable-tree-theme-fabric",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Fabric ui theme for react-sortable-tree",
   "scripts": {
     "build": "npm run clean && cross-env NODE_ENV=production TARGET=umd webpack --bail",

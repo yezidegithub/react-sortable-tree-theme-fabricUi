@@ -20,21 +20,35 @@ class FabricThemeNodeContentRenderer extends Component {
   constructor(props) {
     super(props);
     this.onRenderCell = this.onRenderCell.bind(this);
+  };
 
-    this.nodeTitle = this.props.title || this.props.node.title;
-    const { node, path, treeIndex } = this.props;
-    this.items = [typeof this.nodeTitle === 'object' ? this.nodeTitle :{
-      description: typeof this.nodeTitle === 'function'
-        ? this.nodeTitle({
+  onRenderCell(nestingDepth, item, itemIndex) {
+    return typeof nodeTitle === 'object' ? (<div>{item}</div>) : (
+      <DetailsRow
+        groupNestingDepth={nestingDepth}
+        item={item}
+        itemIndex={itemIndex}
+        columns={this.getColumns()}
+        selection={this.getSelections()}
+        selectionMode={0}
+      />
+    );
+  };
+  getItems() {
+    const { node, path, treeIndex, title } = this.props;
+    const nodeTitle = title || node.title;
+    return [typeof nodeTitle === 'object' ? nodeTitle : {
+      description: typeof nodeTitle === 'function'
+        ? nodeTitle({
           node,
           path,
           treeIndex,
         })
-        : this.nodeTitle
+        : nodeTitle
     }];
-
-    this.columns = Object.keys(this.items[0])
-      .slice(0, 3)
+  };
+  getColumns() {
+    return Object.keys(this.getItems()[0]).slice(0, 3)
       .map(
         (key) => ({
           key,
@@ -43,22 +57,11 @@ class FabricThemeNodeContentRenderer extends Component {
           minWidth: 300
         })
       );
-    this.selection = new Selection();
-    this.selection.setItems(this.items);
   };
-
-
-  onRenderCell(nestingDepth, item, itemIndex) {
-    return typeof this.nodeTitle === 'object' ? (<div>{item}</div>) : (
-      <DetailsRow
-        groupNestingDepth={nestingDepth}
-        item={item}
-        itemIndex={itemIndex}
-        columns={this.columns}
-        selection={this.selection}
-        selectionMode={0}
-      />
-    );
+  getSelections() {
+    const selection = new Selection();
+    selection.setItems(this.getItems());
+    return selection;
   };
   render() {
     const {
@@ -176,9 +179,9 @@ class FabricThemeNodeContentRenderer extends Component {
             }}
           >
             <GroupedList
-              items={this.items}
+              items={this.getItems()}
               onRenderCell={this.onRenderCell}
-              selection={this.selection}
+              selection={this.getSelections()}
               selectionMode={0}
             />
           </div>

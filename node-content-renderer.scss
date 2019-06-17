@@ -127,10 +127,10 @@
     position: absolute;
     transform-origin: 7px 4px;
     transform: translate3d(-50%, -20%, 0);
-    border: solid transparent 10px;
-    border-left-width: 7px;
-    border-right-width: 7px;
-    border-top-color: gray;
+    border: solid transparent 6px;
+    border-left-width: 6px;
+    border-right-width: 6px;
+    border-top-color: #004E8C;
   }
 
   &:hover::after {
