@@ -23,7 +23,7 @@ class FabricThemeNodeContentRenderer extends Component {
 
     this.nodeTitle = this.props.title || this.props.node.title;
     const { node, path, treeIndex } = this.props;
-    this.items = [{
+    this.items = [typeof this.nodeTitle === 'object' ? this.nodeTitle :{
       description: typeof this.nodeTitle === 'function'
         ? this.nodeTitle({
           node,
@@ -49,7 +49,7 @@ class FabricThemeNodeContentRenderer extends Component {
 
 
   onRenderCell(nestingDepth, item, itemIndex) {
-    return (
+    return typeof this.nodeTitle === 'object' ? (<div>{item}</div>) : (
       <DetailsRow
         groupNestingDepth={nestingDepth}
         item={item}
