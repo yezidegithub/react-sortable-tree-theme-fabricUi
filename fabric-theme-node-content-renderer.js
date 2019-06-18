@@ -23,7 +23,7 @@ class FabricThemeNodeContentRenderer extends Component {
   };
 
   onRenderCell(nestingDepth, item, itemIndex) {
-    return typeof nodeTitle === 'object' ? (<div>{item}</div>) : (
+    return React.isValidElement(item) ? (<div>{item}</div>) : (
       <DetailsRow
         groupNestingDepth={nestingDepth}
         item={item}
