@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const target = process.env.TARGET || 'umd';
 
@@ -43,18 +44,27 @@ const config = {
     libraryTarget: 'umd',
     library: 'ReactSortableTreeThemeFileExplorer',
   },
+  optimization: {
+    minimizer: [
+      // we specify a custom UglifyJsPlugin here to get source maps in production
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          compress: false,
+          ecma: 6,
+          mangle: false,
+          beautify: true,
+          comments: true,
+        },
+        sourceMap: true
+      })
+    ]
+  },
   devtool: 'source-map',
   plugins: [
     new webpack.EnvironmentPlugin({ NODE_ENV: 'development' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      mangle: false,
-      beautify: true,
-      comments: true,
-    }),
   ],
   module: {
     rules: [
@@ -136,11 +146,6 @@ switch (target) {
         template: './demo/index.html',
       }),
       new webpack.EnvironmentPlugin({ NODE_ENV: 'production' }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-        },
-      }),
     ];
 
     break;

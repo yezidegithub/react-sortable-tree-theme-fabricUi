@@ -22,7 +22,7 @@
   display: flex;
   position: relative;
 
-  & > * {
+  &>* {
     box-sizing: border-box;
   }
 }
@@ -67,14 +67,14 @@
  * Nodes matching the search conditions are highlighted
  */
 .rowSearchMatch {
-  box-shadow:  0 0px 7px -3px #0080ff;
+  box-shadow: 0 0px 7px -3px #0080ff;
 }
 
 /**
  * The node that matches the search conditions and is currently focused
  */
 .rowSearchFocus {
-  box-shadow:  0 0px 7px -3px #fc6421;
+  box-shadow: 0 0px 7px -3px #fc6421;
 }
 
 %rowItem {
@@ -115,42 +115,23 @@
   background: transparent;
   padding: 0;
   z-index: 2;
-  position: absolute;
-  top: 45%;
-  width: 30px;
-  height: 30px;
-  transform: translate3d(-50%, -50%, 0);
   cursor: pointer;
-
-  &::after {
-    content: '';
-    position: absolute;
-    transform-origin: 7px 4px;
-    transform: translate3d(-50%, -20%, 0);
-    border: solid transparent 6px;
-    border-left-width: 6px;
-    border-right-width: 6px;
-    border-top-color: #004E8C;
-  }
-
-  &:hover::after {
-    border-top-color: black;
-  }
-
-  &:focus {
+  &:focus{
     outline: none;
-
-    &::after {
-      filter: drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9)
-        drop-shadow(0 0 1px #83bef9);
-    }
+    border: none;
+  }
+  .msChevronDown{
+    font-size: 12px;
+    transform: rotateZ(0deg);
+    transition: transform 200ms linear;
   }
 }
-
-.expandButton::after {
-  transform: translate3d(-50%, -20%, 0) rotateZ(-90deg);
+.collapseButton {
+  .msChevronDown{
+    transform: rotateZ(-180deg);
+    transition: transform 200ms linear;
+  }
 }
-
 /**
  * Line for under a node with children
  */
@@ -204,18 +185,22 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
 
   @keyframes arrow-pulse {
     $base-multiplier: 10;
+
     0% {
       transform: translate(0, 0);
       opacity: 0;
     }
+
     30% {
       transform: translate(0, 30% * $base-multiplier);
       opacity: 1;
     }
+
     70% {
       transform: translate(0, 70% * $base-multiplier);
       opacity: 1;
     }
+
     100% {
       transform: translate(0, 100% * $base-multiplier);
       opacity: 0;
@@ -293,4 +278,12 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
     border-bottom: $arrow-size solid transparent;
     border-left: $arrow-size solid $highlight-color;
   }
+}
+
+.rowStyle {
+  display: flex;
+  height: 100%;
+  margin: 0px 16px;
+  justify-content: space-between;
+  border-bottom: 1px solid #E1DFDD;
 }

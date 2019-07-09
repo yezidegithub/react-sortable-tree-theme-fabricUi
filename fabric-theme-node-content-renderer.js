@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { GroupedList } from 'office-ui-fabric-react/lib/components/GroupedList/index';
-import { DetailsRow } from 'office-ui-fabric-react/lib/components/DetailsList/DetailsRow';
-
-import { Selection } from 'office-ui-fabric-react/lib/utilities/selection/index';
+import { DetailsRow,GroupedList,initializeIcons,Icon,Selection } from 'office-ui-fabric-react';
 import styles from './node-content-renderer.scss';
 
+initializeIcons();
 function isDescendant(older, younger) {
   return (
     !!older.children &&
@@ -138,30 +136,10 @@ class FabricThemeNodeContentRenderer extends Component {
     const isLandingPadActive = !didDrop && isDragging;
     const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
     return (
-      <div style={{ height: '100%' }} {...otherProps}>
-        {toggleChildrenVisibility &&
-          node.children &&
-          node.children.length > 0 && (
-            <button
-              type="button"
-              aria-label={node.expanded ? 'Collapse' : 'Expand'}
-              className={
-                node.expanded ? styles.collapseButton : styles.expandButton
-              }
-              style={{
-                left: (lowerSiblingCounts.length - 0.7) * scaffoldBlockPxWidth,
-              }}
-              onClick={() =>
-                toggleChildrenVisibility({
-                  node,
-                  path,
-                  treeIndex,
-                })
-              }
-            />
-          )}
+      <div className={styles.rowStyle} {...otherProps}>
+
         <div style={{ display: 'flex' }}>
-          {scaffold}
+          {/* {scaffold} */}
           <div
             className={
               styles.row +
@@ -186,6 +164,28 @@ class FabricThemeNodeContentRenderer extends Component {
             />
           </div>
         </div>
+        {toggleChildrenVisibility &&
+          node.children &&
+          node.children.length > 0 && (
+            <button
+              type="button"
+              aria-label={node.expanded ? 'Collapse' : 'Expand'}
+              className={
+                node.expanded ? styles.collapseButton : styles.expandButton
+              }
+              style={{
+                left: (lowerSiblingCounts.length - 0.7) * scaffoldBlockPxWidth,
+              }}
+              onClick={() =>
+                toggleChildrenVisibility({
+                  node,
+                  path,
+                  treeIndex,
+                })
+              }>
+              <Icon iconName="ChevronDown" className={styles.msChevronDown} />
+            </button>
+          )}
       </div>
     );
   }
