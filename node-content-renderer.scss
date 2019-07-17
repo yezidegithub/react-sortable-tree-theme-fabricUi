@@ -285,5 +285,24 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
   height: 100%;
   margin: 0px 16px;
   justify-content: space-between;
-  border-bottom: 1px solid #E1DFDD;
+  .detailRow {
+    border: none;
+    background-color: transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+  }
+  .leafNode {
+    margin: 4px 0;
+    background: #EDEDED;
+  }
+}
+.rowLeafStyle{
+  background-color: #EDEDED;
+  margin-bottom: 8px;
+  height: calc(100% - 8px);
+}
+.rowTreeStyle {
+  border-top: 1px solid #E1DFDD;
 }

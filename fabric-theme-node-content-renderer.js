@@ -21,7 +21,7 @@ class FabricThemeNodeContentRenderer extends Component {
   };
 
   onRenderCell(nestingDepth, item, itemIndex) {
-    return React.isValidElement(item) ? (<div>{item}</div>) : (
+    return React.isValidElement(item) ? (<div className={styles.detailRow}>{item}</div>) : (
       <DetailsRow
         groupNestingDepth={nestingDepth}
         item={item}
@@ -29,6 +29,7 @@ class FabricThemeNodeContentRenderer extends Component {
         columns={this.getColumns()}
         selection={this.getSelections()}
         selectionMode={0}
+        className={styles.detailRow}
       />
     );
   };
@@ -135,8 +136,11 @@ class FabricThemeNodeContentRenderer extends Component {
     });
     const isLandingPadActive = !didDrop && isDragging;
     const isDraggedDescendant = draggedNode && isDescendant(draggedNode, node);
+    const isLeafNode = !(toggleChildrenVisibility && node.children && node.children.length > 0);
     return (
-      <div className={styles.rowStyle} {...otherProps}>
+      <div className={styles.rowStyle + (isLeafNode ? ` ${styles.rowLeafStyle}` : ` ${styles.rowTreeStyle}`) + 
+      (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
+      (isSearchMatch ? ` ${styles.rowSearchMatch}` : '')} {...otherProps}>
 
         <div style={{ display: 'flex' }}>
           {/* {scaffold} */}
@@ -147,8 +151,6 @@ class FabricThemeNodeContentRenderer extends Component {
               (isLandingPadActive && !canDrop
                 ? ` ${styles.rowCancelPad}`
                 : '') +
-              (isSearchMatch ? ` ${styles.rowSearchMatch}` : '') +
-              (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
               (className ? ` ${className}` : '')
             }
             style={{
@@ -164,9 +166,11 @@ class FabricThemeNodeContentRenderer extends Component {
             />
           </div>
         </div>
-        {toggleChildrenVisibility &&
-          node.children &&
-          node.children.length > 0 && (
+        {isLeafNode ? (
+          <button
+          type="button"
+          className={styles.expandButton}><Icon iconName="GripperBarVertical" style={{paddingRight: '8px'}}/></button>
+        ) : (
             <button
               type="button"
               aria-label={node.expanded ? 'Collapse' : 'Expand'}
