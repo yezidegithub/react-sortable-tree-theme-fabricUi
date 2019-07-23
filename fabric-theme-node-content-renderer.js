@@ -142,7 +142,7 @@ class FabricThemeNodeContentRenderer extends Component {
       (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
       (isSearchMatch ? ` ${styles.rowSearchMatch}` : '')} {...otherProps}>
 
-        <div style={{ display: 'flex' }}>
+        <div className={styles.titleContainer}>
           {/* {scaffold} */}
           <div
             className={

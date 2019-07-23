@@ -67,14 +67,14 @@
  * Nodes matching the search conditions are highlighted
  */
 .rowSearchMatch {
-  box-shadow: 0 0px 7px -3px #0080ff;
+  box-shadow: inset 0 0px 7px -3px #0080ff;
 }
 
 /**
  * The node that matches the search conditions and is currently focused
  */
 .rowSearchFocus {
-  box-shadow: 0 0px 7px -3px #fc6421;
+  box-shadow: inset 0 0px 7px -3px #fc6421;
 }
 
 %rowItem {
@@ -119,17 +119,19 @@
   &:focus{
     outline: none;
     border: none;
+    filter: drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9)
+        drop-shadow(0 0 1px #83bef9);
   }
   .msChevronDown{
     font-size: 12px;
-    transform: rotateZ(0deg);
-    transition: transform 200ms linear;
+    transform: rotate(0deg);
+    // transition: transform 200ms linear;
   }
 }
 .collapseButton {
   .msChevronDown{
-    transform: rotateZ(-180deg);
-    transition: transform 200ms linear;
+    transform: rotate(180deg);
+    // transition: transform 200ms linear;
   }
 }
 /**
@@ -282,9 +284,9 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
 
 .rowStyle {
   display: flex;
-  height: 100%;
-  margin: 0px 16px;
+  margin: 0px 16px 8px;
   justify-content: space-between;
+  height: calc(100% - 8px);
   .detailRow {
     border: none;
     background-color: transparent;
@@ -297,11 +299,16 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
     margin: 4px 0;
     background: #EDEDED;
   }
+  .titleContainer{
+    flex: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 }
 .rowLeafStyle{
   background-color: #EDEDED;
   margin-bottom: 8px;
-  height: calc(100% - 8px);
 }
 .rowTreeStyle {
   border-top: 1px solid #E1DFDD;
