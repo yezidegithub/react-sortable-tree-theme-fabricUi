@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DetailsRow,GroupedList,initializeIcons,Icon,Selection } from 'office-ui-fabric-react';
 import styles from './node-content-renderer.scss';
+import './node.css';
 
 initializeIcons();
 function isDescendant(older, younger) {
@@ -166,11 +167,7 @@ class FabricThemeNodeContentRenderer extends Component {
             />
           </div>
         </div>
-        {isLeafNode ? (
-          <button
-          type="button"
-          className={styles.expandButton}><Icon iconName="GripperBarVertical" style={{paddingRight: '8px'}}/></button>
-        ) : (
+        {!isLeafNode && !node.isTag && (
             <button
               type="button"
               aria-label={node.expanded ? 'Collapse' : 'Expand'}

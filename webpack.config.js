@@ -32,7 +32,7 @@ const cssLoader = isLocal => ({
     modules: true,
     '-autoprefixer': true,
     importLoaders: true,
-    localIdentName: isLocal ? 'rstcustom__[local]' : null,
+    localIdentName: isLocal ? 'rstcustom__[local]' : '[local]',
   },
 });
 

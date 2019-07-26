@@ -293,7 +293,7 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 160px;
+    max-width: 100%;
   }
   .leafNode {
     margin: 4px 0;
@@ -309,6 +309,9 @@ $highlight-line-size: 6px; // Make it an even number for clean rendering
 .rowLeafStyle{
   background-color: #EDEDED;
   margin-bottom: 8px;
+  &:hover{
+    background-color: #CCCCCC;
+  }
 }
 .rowTreeStyle {
   border-top: 1px solid #E1DFDD;
