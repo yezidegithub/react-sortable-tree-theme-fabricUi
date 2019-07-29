@@ -141,9 +141,21 @@ class FabricThemeNodeContentRenderer extends Component {
     return (
       <div className={styles.rowStyle + (isLeafNode ? ` ${styles.rowLeafStyle}` : ` ${styles.rowTreeStyle}`) + 
       (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
-      (isSearchMatch ? ` ${styles.rowSearchMatch}` : '')} {...otherProps}>
-
-        <div className={styles.titleContainer}>
+      (isSearchMatch ? ` ${styles.rowSearchMatch}` : '')} {...otherProps}
+      >
+      {// eslint-disable-next-line jsx-a11y/no-static-element-interactions,  jsx-a11y/click-events-have-key-events, no-unused-expressions
+        <div className={styles.titleContainer}
+          onClick={() =>
+            {
+              // eslint-disable-next-line no-unused-expressions
+              !isLeafNode && !node.isTag ? toggleChildrenVisibility({
+                node,
+                path,
+                treeIndex,
+              }) : undefined
+            }
+          }
+        >
           {/* {scaffold} */}
           <div
             className={
@@ -167,6 +179,7 @@ class FabricThemeNodeContentRenderer extends Component {
             />
           </div>
         </div>
+      }
         {!isLeafNode && !node.isTag && (
             <button
               type="button"
