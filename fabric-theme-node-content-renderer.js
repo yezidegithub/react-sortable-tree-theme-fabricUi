@@ -142,6 +142,7 @@ class FabricThemeNodeContentRenderer extends Component {
       <div className={styles.rowStyle + (isLeafNode ? ` ${styles.rowLeafStyle}` : ` ${styles.rowTreeStyle}`) + 
       (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
       (isSearchMatch ? ` ${styles.rowSearchMatch}` : '')} {...otherProps}
+      aria-label={node.ariaLabel}
       >
       {// eslint-disable-next-line jsx-a11y/no-static-element-interactions,  jsx-a11y/click-events-have-key-events, no-unused-expressions
         <div className={styles.titleContainer}
@@ -183,7 +184,7 @@ class FabricThemeNodeContentRenderer extends Component {
         {!isLeafNode && !node.isTag && (
             <button
               type="button"
-              aria-label={node.expanded ? 'Collapse' : 'Expand'}
+              aria-expanded={!!node.expanded}
               className={
                 node.expanded ? styles.collapseButton : styles.expandButton
               }
@@ -197,7 +198,10 @@ class FabricThemeNodeContentRenderer extends Component {
                   treeIndex,
                 })
               }>
-              <Icon iconName="ChevronDown" className={styles.msChevronDown} />
+                {node.expanded ? (
+                <Icon iconName="ChevronDown" className={styles.icon} />) : (
+                <Icon iconName="ChevronRight" className={styles.icon} />)
+                }
             </button>
           )}
       </div>
