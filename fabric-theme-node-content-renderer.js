@@ -19,6 +19,7 @@ class FabricThemeNodeContentRenderer extends Component {
   constructor(props) {
     super(props);
     this.onRenderCell = this.onRenderCell.bind(this);
+    this.nodeRef = this.nodeRef.bind(this);
   };
 
   onRenderCell(nestingDepth, item, itemIndex) {
@@ -62,6 +63,17 @@ class FabricThemeNodeContentRenderer extends Component {
     const selection = new Selection();
     selection.setItems(this.getItems());
     return selection;
+  };
+  // hack change the aria-label to be tree
+  // eslint-disable-next-line class-methods-use-this
+  nodeRef () {
+    const virtualGrid = document.getElementsByClassName("ReactVirtualized__Grid");
+    if (virtualGrid && virtualGrid.length > 0) {
+      const gridElement = virtualGrid[0];
+      if (gridElement.hasAttribute("aria-label") && gridElement.getAttribute("aria-label") === "grid") {
+        gridElement.setAttribute("aria-label","tree");
+      }
+    }
   };
   render() {
     const {
@@ -143,6 +155,7 @@ class FabricThemeNodeContentRenderer extends Component {
       (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
       (isSearchMatch ? ` ${styles.rowSearchMatch}` : '')} {...otherProps}
       aria-label={node.ariaLabel}
+      ref={this.nodeRef}
       >
       {// eslint-disable-next-line jsx-a11y/no-static-element-interactions,  jsx-a11y/click-events-have-key-events, no-unused-expressions
         <div className={styles.titleContainer}
@@ -185,6 +198,7 @@ class FabricThemeNodeContentRenderer extends Component {
             <button
               type="button"
               aria-expanded={!!node.expanded}
+              aria-label="Toggle the tree expand or collapse"
               className={
                 node.expanded ? styles.collapseButton : styles.expandButton
               }
